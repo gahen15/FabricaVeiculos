@@ -8,35 +8,35 @@ import br.com.fiap.fabricaVeiculos.instancias.InstanciaMoto;
 
 public class Program {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        boolean running = true;
+        Scanner sc = new Scanner(System.in);
+        boolean loop = true;
 
-        while (running) {
+        while (loop) {
             System.out.println("Selecione o tipo de veículo:");
             System.out.println("1 - Carro");
             System.out.println("2 - Caminhão");
             System.out.println("3 - Moto");
             System.out.println("0 - Sair");
-            int escolha = scanner.nextInt();
+            int escolha = sc.nextInt();
 
             switch (escolha) {
-                case 1:
-                    InstanciaCarro.main(null);
-                    break;
-                case 2:
-                    InstanciaCaminhao.main(null);
-                    break;
-                case 3:
-                    InstanciaMoto.main(null);
-                    break;
-                case 0:
-                    running = false;
-                    break;
+            case 1:
+                InstanciaCarro.main(null); // Passa o sc como argumento
+                break;
+            case 2:
+                InstanciaCaminhao.main(null); // Certifique-se de que InstanciaCaminhao suporta sc
+                break;
+            case 3:
+                InstanciaMoto.main(null); // Certifique-se de que InstanciaMoto suporta sc
+                break;
+            case 0:
+                loop = false;
+                break;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
             }
         }
 
-        scanner.close();
+        sc.close();
     }
 }

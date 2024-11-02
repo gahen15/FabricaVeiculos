@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 public class InstanciaCaminhao {
 
-    public static void main(String[] args) {
+	 public static void main(String[] args) {
         Motor motor = new Motor("Gasolina", 300, 800, 6, 5.5, "2020");
         Rodas rodas = new Rodas(22, "Liga Leve", "Off-road", 295);
         Multimidia multimidia = new Multimidia("Pioneer", true, true, true);
@@ -25,7 +25,7 @@ public class InstanciaCaminhao {
             "Volvo",
             "FH16",
             "Branco",
-            "1234567890",
+            "1234567845",
             motor,
             "Automático",
             "João da Silva",
@@ -116,6 +116,7 @@ public class InstanciaCaminhao {
                     System.out.println("Capacidade de Rodagem: " + capacidadeRodagem + " km");
                     break;
                 case 0:
+                	System.out.println("\n".repeat(45));
                     loop = false;
                     break;
                 default:
@@ -123,6 +124,6 @@ public class InstanciaCaminhao {
             }
         }
 
-        sc.close();
+     
     }
 }

@@ -88,6 +88,7 @@ public class InstanciaCarro {
                     System.out.println("Capacidade de Rodagem: " + capacidadeRodagem + " km");
                     break;
                 case 0:
+                	System.out.println("\n".repeat(45));
                     loop = false;
                     break;
                 default:
@@ -95,6 +96,6 @@ public class InstanciaCarro {
             }
         }
 
-        sc.close();
+  
     }
 }
