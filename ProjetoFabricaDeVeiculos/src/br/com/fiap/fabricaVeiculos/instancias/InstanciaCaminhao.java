@@ -29,7 +29,6 @@ public class InstanciaCaminhao {
             22,
             3,
             15.0,
-            120.0,
             rodas,
             multimidia,
             freios
