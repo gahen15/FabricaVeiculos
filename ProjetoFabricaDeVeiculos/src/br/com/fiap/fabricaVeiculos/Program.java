@@ -21,13 +21,13 @@ public class Program {
 
             switch (escolha) {
                 case 1:
-                    InstanciaCarro.main(null); // Chama o método main da classe InstanciaCarro
+                    InstanciaCarro.main(null);
                     break;
                 case 2:
-                    InstanciaCaminhao.main(null); // Chama o método main da classe InstanciaCaminhao
+                    InstanciaCaminhao.main(null);
                     break;
                 case 3:
-                    InstanciaMoto.main(null); // Chama o método main da classe InstanciaMoto
+                    InstanciaMoto.main(null);
                     break;
                 case 0:
                     running = false;

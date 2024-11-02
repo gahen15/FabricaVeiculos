@@ -1,6 +1,7 @@
 package br.com.fiap.fabricaVeiculos.componentes;
 
 import java.time.LocalDate;
+import br.com.fiap.fabricaVeiculos.interfaces.Combustivel;
 
 public class Motor {
     private String tipo;
@@ -10,6 +11,7 @@ public class Motor {
     private double consumo;
     private LocalDate anoFabricacao;
     private boolean ligado;
+    private Combustivel combustivel;
 
     public Motor(String tipo, int potencia, int torque, int quantidadeCilindros, double consumo, String anoFabricacao) {
         this.tipo = tipo;
@@ -18,6 +20,7 @@ public class Motor {
         this.quantidadeCilindros = quantidadeCilindros;
         this.consumo = consumo;
         this.anoFabricacao = converter(anoFabricacao);
+        
     }
 
     private LocalDate converter(String dataString) {
@@ -26,7 +29,7 @@ public class Motor {
             int ano = Integer.parseInt(dataString);
             return LocalDate.of(ano, 1, 1);
         } catch (NumberFormatException erro) {
-            System.out.println("Data inválida: " + dataString + "   - Utilize o formato 'YYYY'");
+            System.out.println("Data inválida: " + dataString + " - Utilize o formato 'YYYY'");
             return null;
         }
     }
@@ -37,7 +40,8 @@ public class Motor {
         System.out.println("Torque: " + torque + " Nm");
         System.out.println("Quantidade de Cilindros: " + quantidadeCilindros);
         System.out.println("Consumo: " + consumo + " km/l");
-        System.out.println("Ano de Fabricação: " + anoFabricacao.getYear());
+        System.out.println("Ano de Fabricação: " + (anoFabricacao != null ? anoFabricacao.getYear() : "N/A"));
+        System.out.println("Tipo de Combustível: " + combustivel.getClass().getSimpleName());
     }
 
     public void ligar() {

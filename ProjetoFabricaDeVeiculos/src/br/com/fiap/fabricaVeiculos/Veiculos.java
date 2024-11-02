@@ -6,10 +6,11 @@ import br.com.fiap.fabricaVeiculos.componentes.Freios;
 import br.com.fiap.fabricaVeiculos.componentes.Motor;
 import br.com.fiap.fabricaVeiculos.componentes.Multimidia;
 import br.com.fiap.fabricaVeiculos.componentes.Rodas;
+import br.com.fiap.fabricaVeiculos.componentes.Tanque;
+import br.com.fiap.fabricaVeiculos.interfaces.Combustivel;
 
-public class Veiculos {
+public abstract class Veiculos {
     
-    // Atributos
     protected String marca, modelo, cor, renavam, tipoCambio, nomeCondutor; 
     protected LocalDate anoFabricacao, anoModelo;
     protected double velocidade = 0;
@@ -19,11 +20,12 @@ public class Veiculos {
     protected Rodas rodas;
     protected Multimidia multimidia;
     protected Freios freios;
-
-    // Constructor
+    protected Tanque tanque;
+    protected double capacidadeRodagem;
+    
     public Veiculos(String marca, String modelo, String cor, String renavam, Motor motor, String tipoCambio,
             String nomeCondutor, String anoFabricacao, String anoModelo, double limiteVelocidade, Rodas rodas,
-            Multimidia multimidia, Freios freios) {
+            Multimidia multimidia, Freios freios, Tanque tanque) {
         this.marca = marca;
         this.modelo = modelo;
         this.cor = cor;
@@ -37,23 +39,43 @@ public class Veiculos {
         this.rodas = rodas;
         this.multimidia = multimidia;
         this.freios = freios;
+        this.tanque = tanque;
     }
 
     private LocalDate converter(String dataString) {
-        // Remove espaços em branco
         dataString = dataString.trim();
         try {
-            // Tenta converter a string para um inteiro
             int ano = Integer.parseInt(dataString);
-            // Cria um LocalDate usando 1 de janeiro como data
-            return LocalDate.of(ano, 1, 1); // 1 de janeiro do ano informado
+            return LocalDate.of(ano, 1, 1);
         } catch (NumberFormatException erro) {
             System.out.println("Data inválida: " + dataString + " - Utilize o formato 'YYYY'");
-            return null; // Retorna null ou lance uma exceção, conforme sua necessidade
+            return null;
         }
     }
 
-    // Métodos
+    public void abastecer(Combustivel combustivel, double qntCombustivel) {
+        if (tanque != null) {
+            double rendimento = combustivel.abastecimento(qntCombustivel, tanque);
+            if (rendimento > 0) {
+                capacidadeRodagem = rendimento;
+                System.out.println("Abastecimento realizado com sucesso! Rendimento total: " + rendimento + " km.");
+            } else {
+                System.out.println("Falha no abastecimento. Verifique a quantidade de combustível.");
+            }
+        } else {
+            System.out.println("Tanque não disponível.");
+        }
+    }
+
+    public void esvaziarTanque() {
+        if (tanque != null) {
+            tanque.consumir(tanque.getQntAtual());
+            System.out.println("Tanque esvaziado.");
+        } else {
+            System.out.println("Tanque não disponível.");
+        }
+    }
+
     public void ligar() {
         if (!this.ligado) {
             ligado = true;
@@ -95,7 +117,6 @@ public class Veiculos {
         System.out.println("O veículo parou!");
     }
 
-    // Método exibirDados
     public void exibirDados() {
         System.out.println("=== Dados do Veículo ===");
         System.out.println("Marca: " + marca);
@@ -108,7 +129,14 @@ public class Veiculos {
         System.out.println("Nome do Condutor: " + nomeCondutor);
         System.out.println("Velocidade Máxima: " + limiteVelocidade + " Km/h");
 
-        // Exibindo informações do motor
+        System.out.println("=== Informações do Tanque ===");
+        if (tanque != null) {
+            System.out.println("Quantidade Atual de Combustível: " + tanque.getQntAtual() + " litros");
+            System.out.println("Capacidade Máxima do Tanque: " + tanque.getCapacidadeMaxima() + " litros");
+        } else {
+            System.out.println("Tanque não disponível.");
+        }
+
         System.out.println("\n=== Informações do Motor ===");
         if (motor != null) {
             motor.exibirInformacoes();
@@ -116,7 +144,6 @@ public class Veiculos {
             System.out.println("Motor não disponível.");
         }
 
-        // Exibindo informações das rodas
         System.out.println("\n=== Informações das Rodas ===");
         if (rodas != null) {
             rodas.exibirInformacoes();
@@ -124,7 +151,6 @@ public class Veiculos {
             System.out.println("Rodas não disponíveis.");
         }
 
-        // Exibindo informações da multimídia
         System.out.println("\n=== Informações da Multimídia ===");
         if (multimidia != null) {
             multimidia.exibirInformacoes();
@@ -132,14 +158,18 @@ public class Veiculos {
             System.out.println("Sistema de multimídia não disponível.");
         }
 
-        // Exibindo informações dos freios
         System.out.println("\n=== Informações dos Freios ===");
         if (freios != null) {
             freios.exibirInformacoes();
         } else {
             System.out.println("Freios não disponíveis.");
         }
+
+        System.out.println("\n=== Capacidade de Rodagem ===");
+        System.out.println("Capacidade de Rodagem: " + capacidadeRodagem + " km");
     }
 
-    // Outros métodos (ligar, desligar, acelerar, frear) ...
+    public double getCapacidadeRodagem() {
+        return capacidadeRodagem;
+    }
 }
