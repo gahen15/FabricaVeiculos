@@ -1,5 +1,6 @@
 package br.com.fiap.fabricaVeiculos.instancias;
 
+// Importa as classes de componentes e interfaces necessárias para a instância do caminhão
 import br.com.fiap.fabricaVeiculos.Caminhao;
 import br.com.fiap.fabricaVeiculos.componentes.Freios;
 import br.com.fiap.fabricaVeiculos.componentes.Motor;
@@ -15,12 +16,14 @@ import java.util.Scanner;
 public class InstanciaCaminhao {
 
 	 public static void main(String[] args) {
+        // Cria componentes para o caminhão, como motor, rodas, multimídia, freios e tanque
         Motor motor = new Motor("Gasolina", 300, 800, 6, 5.5, "2020");
         Rodas rodas = new Rodas(22, "Liga Leve", "Off-road", 295);
         Multimidia multimidia = new Multimidia("Pioneer", true, true, true);
         Freios freios = new Freios("Disco", "Cerâmico", true);
         Tanque tanque = new Tanque(200);
 
+        // Instancia um caminhão com os componentes definidos e características específicas
         Caminhao caminhao = new Caminhao(
             "Volvo",
             "FH16",
@@ -43,6 +46,7 @@ public class InstanciaCaminhao {
         Scanner sc = new Scanner(System.in);
         boolean loop = true;
 
+        // Menu de opções para interação com o caminhão
         while (loop) {
             System.out.println("\n=== Painel de Opções do Caminhão ===");
             System.out.println("1 - Ligar");
@@ -59,38 +63,47 @@ public class InstanciaCaminhao {
 
             int opcao = sc.nextInt();
 
+            // Switch para executar ações de acordo com a opção escolhida
             switch (opcao) {
                 case 1:
+                    // Liga o caminhão
                     caminhao.ligar();
                     break;
                 case 2:
+                    // Acelera o caminhão a uma velocidade especificada
                     System.out.print("Informe a velocidade para acelerar: ");
                     double incremento = sc.nextDouble();
                     caminhao.acelerar(incremento);
                     break;
                 case 3:
+                    // Freia o caminhão
                     caminhao.frear();
                     break;
                 case 4:
+                    // Desliga o caminhão
                     caminhao.desligar();
                     break;
                 case 5:
+                    // Exibe os dados do caminhão
                     caminhao.exibirDados();
                     break;
                 case 6:
+                    // Carrega o caminhão com uma quantidade de carga especificada
                     System.out.print("Informe a quantidade de carga para carregar (toneladas): ");
                     double cargaCarregar = sc.nextDouble();
                     caminhao.carregar(cargaCarregar);
                     break;
                 case 7:
+                    // Descarrega uma quantidade de carga do caminhão
                     System.out.print("Informe a quantidade de carga para descarregar (toneladas): ");
                     double cargaDescarregar = sc.nextDouble();
                     caminhao.descarregar(cargaDescarregar);
                     break;
                 case 8:
+                    // Abastece o caminhão com um tipo e quantidade de combustível especificados
                     System.out.print("Informe a quantidade de combustível para abastecer (litros): ");
                     double qntCombustivel = sc.nextDouble();
-                    System.out.println("Informe qual o tipo de combustivel que deseja abastecer:\n|1|Gasolina\n|2|Alcool\n|3|Gasolina e Alcool");
+                    System.out.println("Informe qual o tipo de combustível que deseja abastecer:\n|1|Gasolina\n|2|Alcool");
 
                     int tipoCombustivel = sc.nextInt();
                     Combustivel combustivel;
@@ -109,21 +122,23 @@ public class InstanciaCaminhao {
                     caminhao.abastecer(combustivel, qntCombustivel);
                     break;
                 case 9:
+                    // Esvazia o tanque do caminhão
                     caminhao.esvaziarTanque();
                     break;
                 case 10:
+                    // Calcula e exibe a capacidade de rodagem do caminhão
                     double capacidadeRodagem = caminhao.getCapacidadeRodagem();
                     System.out.println("Capacidade de Rodagem: " + capacidadeRodagem + " km");
                     break;
                 case 0:
-                	System.out.println("\n".repeat(45));
+                    // Limpa a tela e sai do menu, retornando ao menu anterior
+                    System.out.println("\n".repeat(45));
                     loop = false;
                     break;
                 default:
+                    // Mensagem para uma opção inválida
                     System.out.println("Opção inválida. Tente novamente.");
             }
         }
-
-     
     }
 }

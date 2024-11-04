@@ -2,6 +2,7 @@ package br.com.fiap.fabricaVeiculos;
 
 import java.time.LocalDate;
 
+// Importa os componentes e a interface Combustivel necessários para a classe Veiculos
 import br.com.fiap.fabricaVeiculos.componentes.Freios;
 import br.com.fiap.fabricaVeiculos.componentes.Motor;
 import br.com.fiap.fabricaVeiculos.componentes.Multimidia;
@@ -10,8 +11,9 @@ import br.com.fiap.fabricaVeiculos.componentes.Tanque;
 import br.com.fiap.fabricaVeiculos.interfaces.Combustivel;
 
 public abstract class Veiculos {
-    
-    protected String marca, modelo, cor, renavam, tipoCambio, nomeCondutor; 
+
+    // Declaração dos atributos protegidos para acesso nas subclasses
+    protected String marca, modelo, cor, renavam, tipoCambio, nomeCondutor;
     protected LocalDate anoFabricacao, anoModelo;
     protected double velocidade = 0;
     private boolean ligado = false;
@@ -22,7 +24,8 @@ public abstract class Veiculos {
     protected Freios freios;
     protected Tanque tanque;
     protected double capacidadeRodagem;
-    
+
+    // Construtor para inicializar os atributos do veículo
     public Veiculos(String marca, String modelo, String cor, String renavam, Motor motor, String tipoCambio,
             String nomeCondutor, String anoFabricacao, String anoModelo, double limiteVelocidade, Rodas rodas,
             Multimidia multimidia, Freios freios, Tanque tanque) {
@@ -42,17 +45,19 @@ public abstract class Veiculos {
         this.tanque = tanque;
     }
 
+    // Método auxiliar para converter ano (em String) para LocalDate
     private LocalDate converter(String dataString) {
         dataString = dataString.trim();
         try {
             int ano = Integer.parseInt(dataString);
-            return LocalDate.of(ano, 1, 1);
+            return LocalDate.of(ano, 1, 1); // Cria a data usando apenas o ano
         } catch (NumberFormatException erro) {
             System.out.println("Data inválida: " + dataString + " - Utilize o formato 'YYYY'");
             return null;
         }
     }
 
+    // Método para abastecer o veículo
     public void abastecer(Combustivel combustivel, double qntCombustivel) {
         if (tanque != null) {
             double rendimento = combustivel.abastecimento(qntCombustivel, tanque);
@@ -67,6 +72,7 @@ public abstract class Veiculos {
         }
     }
 
+    // Método para esvaziar o tanque
     public void esvaziarTanque() {
         if (tanque != null) {
             tanque.consumir(tanque.getQntAtual());
@@ -76,6 +82,7 @@ public abstract class Veiculos {
         }
     }
 
+    // Método para ligar o veículo
     public void ligar() {
         if (!this.ligado) {
             ligado = true;
@@ -86,6 +93,7 @@ public abstract class Veiculos {
         }
     }
 
+    // Método para desligar o veículo
     public void desligar() {
         if (this.ligado && velocidade == 0) {
             ligado = false;
@@ -98,6 +106,7 @@ public abstract class Veiculos {
         }
     }
 
+    // Método para acelerar o veículo
     public void acelerar(double incremento) {
         if (ligado) {
             velocidade += incremento;
@@ -112,11 +121,13 @@ public abstract class Veiculos {
         }
     }
 
+    // Método para frear o veículo
     public void frear() {
         velocidade = 0;
         System.out.println("O veículo parou!");
     }
 
+    // Exibe informações detalhadas do veículo
     public void exibirDados() {
         System.out.println("=== Dados do Veículo ===");
         System.out.println("Marca: " + marca);
@@ -129,6 +140,7 @@ public abstract class Veiculos {
         System.out.println("Nome do Condutor: " + nomeCondutor);
         System.out.println("Velocidade Máxima: " + limiteVelocidade + " Km/h");
 
+        // Exibe informações do tanque, motor, rodas, multimídia e freios
         System.out.println("=== Informações do Tanque ===");
         if (tanque != null) {
             System.out.println("Quantidade Atual de Combustível: " + tanque.getQntAtual() + " litros");
@@ -169,6 +181,7 @@ public abstract class Veiculos {
         System.out.println("Capacidade de Rodagem: " + capacidadeRodagem + " km");
     }
 
+    // Retorna a capacidade de rodagem do veículo
     public double getCapacidadeRodagem() {
         return capacidadeRodagem;
     }
